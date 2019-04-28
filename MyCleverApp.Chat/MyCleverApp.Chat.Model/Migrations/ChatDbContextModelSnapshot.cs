@@ -33,8 +33,6 @@ namespace MyCleverApp.Chat.Model.Migrations
 
                     b.Property<DateTime>("ModifiedOn");
 
-                    b.Property<string>("Username");
-
                     b.HasKey("Id");
 
                     b.ToTable("ContactInfo");
@@ -73,6 +71,10 @@ namespace MyCleverApp.Chat.Model.Migrations
 
                     b.Property<long>("ContactListId");
 
+                    b.Property<DateTime>("CreatedOn");
+
+                    b.Property<DateTime>("ModifiedOn");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ContactInfoId");
@@ -96,7 +98,7 @@ namespace MyCleverApp.Chat.Model.Migrations
 
                     b.Property<string>("Password");
 
-                    b.Property<string>("Username");
+                    b.Property<string>("UserName");
 
                     b.HasKey("Id");
 

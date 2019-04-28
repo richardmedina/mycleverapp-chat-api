@@ -10,7 +10,7 @@ using MyCleverApp.Chat.Model;
 namespace MyCleverApp.Chat.Model.Migrations
 {
     [DbContext(typeof(ChatDbContext))]
-    [Migration("20190427093231_Initial")]
+    [Migration("20190428062155_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,8 +34,6 @@ namespace MyCleverApp.Chat.Model.Migrations
                     b.Property<string>("DisplayName");
 
                     b.Property<DateTime>("ModifiedOn");
-
-                    b.Property<string>("Username");
 
                     b.HasKey("Id");
 
@@ -75,6 +73,10 @@ namespace MyCleverApp.Chat.Model.Migrations
 
                     b.Property<long>("ContactListId");
 
+                    b.Property<DateTime>("CreatedOn");
+
+                    b.Property<DateTime>("ModifiedOn");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ContactInfoId");
@@ -98,7 +100,7 @@ namespace MyCleverApp.Chat.Model.Migrations
 
                     b.Property<string>("Password");
 
-                    b.Property<string>("Username");
+                    b.Property<string>("UserName");
 
                     b.HasKey("Id");
 

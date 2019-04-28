@@ -2,6 +2,8 @@
 using MyCleverApp.Chat.Model.Entities;
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace MyCleverApp.Chat.Model
 {
@@ -16,6 +18,36 @@ namespace MyCleverApp.Chat.Model
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             CreateUsers(modelBuilder);
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies();
+            base.OnConfiguring(optionsBuilder);
+        }
+
+        public override int SaveChanges()
+        {
+            AddEntityTrackInfo();
+            return base.SaveChanges();
+        }
+
+        private void AddEntityTrackInfo()
+        {
+            DateTime currentDate = DateTime.UtcNow;
+            foreach (var entry in ChangeTracker.Entries ().Where (e => e.Entity is EntityBase))
+            {
+                var entity = entry.Entity as EntityBase;
+                if (entry.State == EntityState.Added)
+                {
+                    entity.CreatedOn = currentDate;
+                    entity.ModifiedOn = currentDate;
+                }
+                else if (entry.State == EntityState.Modified)
+                {
+                    entity.ModifiedOn = currentDate;
+                }
+            }
         }
 
         private void CreateUsers(ModelBuilder modelBuilder)

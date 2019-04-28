@@ -9,10 +9,8 @@ namespace MyCleverApp.Chat.Model.Entities
     public class ContactInfo : EntityBase
     {
         public long Id { get; set; }
-        public string Username { get; set; }
         public string DisplayName { get; set; }
         public string DisplayImage { get; set; }
-        
         public virtual List<ContactListContact> ContactListContact { get; set; }
     }
 }

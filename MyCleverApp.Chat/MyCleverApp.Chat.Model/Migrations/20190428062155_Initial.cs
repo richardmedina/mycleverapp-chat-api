@@ -16,7 +16,6 @@ namespace MyCleverApp.Chat.Model.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: false),
-                    Username = table.Column<string>(nullable: true),
                     DisplayName = table.Column<string>(nullable: true),
                     DisplayImage = table.Column<string>(nullable: true)
                 },
@@ -33,7 +32,7 @@ namespace MyCleverApp.Chat.Model.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: false),
-                    Username = table.Column<string>(nullable: true),
+                    UserName = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
                     ContactInfoId = table.Column<long>(nullable: true)
                 },
@@ -77,6 +76,8 @@ namespace MyCleverApp.Chat.Model.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: false),
                     ContactInfoId = table.Column<long>(nullable: false),
                     ContactListId = table.Column<long>(nullable: false)
                 },

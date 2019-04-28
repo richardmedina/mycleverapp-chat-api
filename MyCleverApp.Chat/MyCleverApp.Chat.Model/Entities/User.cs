@@ -9,14 +9,12 @@ namespace MyCleverApp.Chat.Model.Entities
     public class User : EntityBase
     {
         public long Id { get; set; }
-        public string Username { get; set; }
+        public string UserName { get; set; }
         public string Password { get; set; }
-
-        /* Navigation Properties */
+        [ForeignKey(nameof(ContactInfo))]
         public long? ContactInfoId { get; set; }
-
-        [ForeignKey(nameof(ContactInfoId))]
-        public ContactInfo ContactInfo { get; set; }
+        /* Navigation Properties */
+        public virtual ContactInfo ContactInfo { get; set; }
         public virtual List<ContactList> ContactLists { get; set; }
     }
 }

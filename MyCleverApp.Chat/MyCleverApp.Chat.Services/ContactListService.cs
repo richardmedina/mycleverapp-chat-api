@@ -23,7 +23,7 @@ namespace MyCleverApp.Chat.Services
 
         public ServiceResult<IEnumerable<ContactListDto>> GetContactLists(GetContactListsRequest request)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Username == request.UserName);
+            var user = _context.Users.FirstOrDefault(u => u.UserName == request.UserName);
 
             if (user == null) return GetFailedResult<IEnumerable<ContactListDto>>(request,  
                 new ErrorMessage
@@ -38,20 +38,20 @@ namespace MyCleverApp.Chat.Services
 
         public ServiceResult<ContactListDto> CreateContactList (CreateContactListDto request)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Username == request.OwnerUserName);
+            var user = _context.Users.FirstOrDefault(u => u.UserName == request.OwnerUserName);
 
             if (user == null) return GetFailedResult<ContactListDto>(request, new ErrorMessage { Text = "User Not Found" });
 
             var list = _context.ContactLists.Add(new ContactList
             {
-                OwnerUserId = user.Id,
                 Name = request.ContactListName,
-                Description = request.ContactListDescription
+                Description = request.ContactListDescription,
+                OwnerUser = user
             });
 
             _context.SaveChanges();
 
-            return GetSuccessResult(request, Mapper.Map<ContactListDto> (list));
+            return GetSuccessResult(request, _mapper.Map<ContactListDto> (list.Entity));
         }
     }
 }

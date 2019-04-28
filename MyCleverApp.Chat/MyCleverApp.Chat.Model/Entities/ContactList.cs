@@ -11,9 +11,9 @@ namespace MyCleverApp.Chat.Model.Entities
         public long Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public long OwnerUserId { get; set; }
 
-        [ForeignKey(nameof(OwnerUserId))]
+        [ForeignKey(nameof(OwnerUser))]
+        public long OwnerUserId { get; set; }
         public virtual User OwnerUser { get; set; }
         
         public virtual List<ContactListContact> ContactListContact { get; set; }

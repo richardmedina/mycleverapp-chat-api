@@ -72,6 +72,7 @@ namespace MyCleverApp.Chat.Api
         {
             services.AddTransient<IMessageService, MessageService>();
             services.AddTransient<IContactListService, ContactListService>();
+            services.AddTransient<IUserService, UserService>();
         }
     }
 }
