@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MyCleverApp.Chat.Api.Models.Auth;
 using MyCleverApp.Chat.Api.Models.ContactList;
 using MyCleverApp.Chat.Api.Models.Messages;
 using MyCleverApp.Chat.Api.Models.Users;
@@ -21,6 +22,7 @@ namespace MyCleverApp.Chat.Api.MapperProfiles
             Users();
             Messages();
             ContactList();
+            Auth();
         }
 
         public void Users ()
@@ -47,6 +49,12 @@ namespace MyCleverApp.Chat.Api.MapperProfiles
                 .ReverseMap();
 
             CreateMap<CreateContactListModel, CreateContactListDto>()
+                .ReverseMap();
+        }
+
+        public void Auth ()
+        {
+            CreateMap<LoginModel, AuthenticateDto>()
                 .ReverseMap();
         }
     }

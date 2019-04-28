@@ -42,10 +42,18 @@ namespace MyCleverApp.Chat.Services
             var dto = _mapper.Map<UserDto>(user);
             return GetSuccessResult(createUser, dto);
         }
-
         public ServiceResult<IEnumerable<UserDto>> GetUsers()
         {
             return GetSuccessResult(null as ServiceRequest, _mapper.Map<IEnumerable<UserDto>>(_context.Users));
+        }
+
+        public ServiceResult<UserDto> Authenticate (AuthenticateDto auth)
+        {
+            var authenticatedUser = _context.Users.FirstOrDefault(u => u.UserName == auth.UserName && u.Password == auth.Password);
+
+            if (authenticatedUser == null) return GetFailedResult<UserDto>(auth, new ErrorMessage { Text = "User Authentication Failed" });
+
+            return GetSuccessResult(auth, _mapper.Map<UserDto> (authenticatedUser));
         }
     }
 }

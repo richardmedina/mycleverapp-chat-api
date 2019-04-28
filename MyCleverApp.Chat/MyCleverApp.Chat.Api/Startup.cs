@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using MyCleverApp.Chat.Api.MapperProfiles;
 using MyCleverApp.Chat.Model;
 using MyCleverApp.Chat.Services;
@@ -35,6 +38,7 @@ namespace MyCleverApp.Chat.Api
             services.AddAutoMapper();
 
             ConfigureDatabase(services);
+            ConfigureAuthentication(services);
             ConfigureBusinessServices(services);
         }
 
@@ -51,6 +55,7 @@ namespace MyCleverApp.Chat.Api
                 app.UseHsts();
             }
 
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
 
@@ -73,6 +78,36 @@ namespace MyCleverApp.Chat.Api
             services.AddTransient<IMessageService, MessageService>();
             services.AddTransient<IContactListService, ContactListService>();
             services.AddTransient<IUserService, UserService>();
+        }
+
+        private void ConfigureAuthentication(IServiceCollection services)
+        {
+            var key = Encoding.ASCII.GetBytes(Configuration.GetSection("Authentication").GetValue<string>("Secret"));
+
+            services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(opt => {
+                opt.Events = new JwtBearerEvents
+                {
+                    OnTokenValidated = context =>
+                    {
+                        var ctx = context;
+                        return Task.CompletedTask;
+                    }
+                };
+                opt.RequireHttpsMetadata = false;
+                opt.SaveToken = true;
+                opt.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
         }
     }
 }

@@ -10,5 +10,7 @@ namespace MyCleverApp.Chat.Services.Interfaces
     {
         ServiceResult<UserDto> CreateUser(CreateUserDto createUser);
         ServiceResult<IEnumerable<UserDto>> GetUsers();
+
+        ServiceResult<UserDto> Authenticate(AuthenticateDto auth);
     }
 }
