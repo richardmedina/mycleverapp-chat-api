@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace MyCleverApp.Chat.Dto.Users
+namespace MyCleverApp.Chat.Api.Models.Auth
 {
-    public class UserDto
+    public class LoginModel
     {
-        public int Id { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
     }
