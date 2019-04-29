@@ -35,7 +35,7 @@ namespace MyCleverApp.Chat.Api.MapperProfiles
 
         public void Messages ()
         {
-            CreateMap<PostMessage, SendMessageDto>()
+            CreateMap<MessagePostModel, SendMessageDto>()
                 .ReverseMap();
         }
 

@@ -25,10 +25,10 @@ namespace MyCleverApp.Chat.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult PostMessage ([FromBody] PostMessage postMessage)
+        public IActionResult PostMessage ([FromBody] MessagePostModel messagePostModel)
         {
             var guid = Guid.NewGuid().ToString();
-            var dto = _mapper.Map<SendMessageDto>(postMessage);
+            var dto = _mapper.Map<SendMessageDto>(messagePostModel);
 
             return Ok(_messageService.SendMessage(dto));
         }

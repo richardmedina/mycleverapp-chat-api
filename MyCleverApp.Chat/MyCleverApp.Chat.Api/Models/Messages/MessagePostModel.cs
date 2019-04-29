@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MyCleverApp.Chat.Api.Models.Messages
 {
-    public class PostMessage
+    public class MessagePostModel
     {
         public string Recipient { get; set; }
         public string Message { get; set; }
