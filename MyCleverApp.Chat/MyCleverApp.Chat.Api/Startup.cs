@@ -19,6 +19,7 @@ using MyCleverApp.Chat.Api.MapperProfiles;
 using MyCleverApp.Chat.Model;
 using MyCleverApp.Chat.Services;
 using MyCleverApp.Chat.Services.Interfaces;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace MyCleverApp.Chat.Api
 {
@@ -40,6 +41,7 @@ namespace MyCleverApp.Chat.Api
             ConfigureDatabase(services);
             ConfigureAuthentication(services);
             ConfigureBusinessServices(services);
+            ConfigureApiDoc(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,6 +59,13 @@ namespace MyCleverApp.Chat.Api
 
             app.UseAuthentication();
             app.UseHttpsRedirection();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "MyCleverAppChatApi");
+                //c.RoutePrefix = "/api/docs";
+            });
+
             app.UseMvc();
 
             SeedDatabase(seeder);
@@ -107,6 +116,21 @@ namespace MyCleverApp.Chat.Api
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
+            });
+        }
+
+        private void ConfigureApiDoc (IServiceCollection services)
+        {
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "MyCleverAppChatApi", Version = "v1" });
+                //c.AddSecurityDefinition("oauth2", new ApiKeyScheme
+                //{
+                //    Description = "Standard Authorization header using the Bearer scheme. Example: \"bearer {token}\"",
+                //    In = "header",
+                //    Name = "Authorization",
+                //    Type = "apiKey"
+                //});
             });
         }
     }

@@ -20,7 +20,7 @@ namespace MyCleverApp.Chat.Api.Controllers
             _mapper = mapper;
             _contactListService = contactListService;
         }
-
+        [HttpGet]
         public IActionResult Index()
         {
             var request = _mapper.Map<GetContactListsRequest>(GetCurrentUserName ());
